@@ -1,0 +1,54 @@
+# PyTorch CPU-only URL (RENDER KE LIYE BOHOT ZAROORI HAI)
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Core ML and NLP Libraries
+torch>=2.0.0
+transformers>=4.30.0
+datasets>=2.14.0
+tokenizers>=0.13.0
+scikit-learn>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# NLP Processing
+spacy>=3.6.0
+nltk>=3.8.0
+
+# API and Web Framework
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+
+# Frontend
+streamlit>=1.25.0
+plotly>=5.15.0
+
+# Data Processing
+imbalanced-learn>=0.11.0
+
+# Model Interpretability
+lime>=0.2.0
+shap>=0.42.0
+
+# Database (Naya Add Kiya Hai)
+pymongo[srv]>=4.5.0
+motor>=3.3.0
+
+# Authentication (Naya Add Kiya Hai)
+passlib[bcrypt]>=1.7.4
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.65.0
+pyyaml>=6.0
+requests>=2.31.0
+bcrypt>=4.1.0
+python-jose>=3.3.0
+certifi>=2023.7.22
+
+# Testing and Quality
+pytest>=7.4.0
+black>=23.7.0
+flake8>=6.1.0
+

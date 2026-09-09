@@ -1,0 +1,58 @@
+# Configuration file for Mental Health Companion
+
+# Model Configuration
+model:
+  name: "distilbert-base-uncased"
+  path: "models"
+  max_length: 128
+  device: "auto"  # auto, cuda, or cpu
+
+# Training Configuration
+training:
+  epochs: 5
+  batch_size: 32
+  learning_rate: 2e-5
+  dropout: 0.1
+  weight_decay: 0.01
+  early_stopping_patience: 3
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+  workers: 1
+  timeout: 30
+
+# Frontend Configuration
+frontend:
+  port: 8501
+  api_url: "http://localhost:8000"
+  theme:
+    primary_color: "#1f77b4"
+    background_color: "#ffffff"
+
+# Data Configuration
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  emotions:
+    - joy
+    - sadness
+    - anger
+    - fear
+    - disgust
+    - surprise
+
+# Privacy and Security
+privacy:
+  session_timeout: 3600  # seconds
+  log_retention_days: 7
+  encrypt_logs: true
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/app.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
