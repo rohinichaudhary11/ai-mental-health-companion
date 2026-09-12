@@ -19,7 +19,11 @@ def get_client() -> AsyncIOMotorClient:
     """
     global _client
     if _client is None:
-        _client = AsyncIOMotorClient(MONGODB_URI, tlsCAFile=certifi.where())
+        _client = AsyncIOMotorClient(
+            MONGODB_URI,
+            tlsCAFile=certifi.where(),
+            serverSelectionTimeoutMS=5000,
+        )
     return _client
 
 

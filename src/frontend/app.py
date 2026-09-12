@@ -25,7 +25,7 @@ import os
 
 API_URL = st.sidebar.text_input(
     "API URL",
-    value=os.getenv("API_URL", "http://localhost:8000"),
+    value=os.getenv("API_URL", "https://ai-mental-health-companion-main.onrender.com"),
     help="URL of the FastAPI backend",
 )
 
@@ -73,13 +73,30 @@ def api_signup(email: str, password: str, full_name: Optional[str] = None) -> Di
         resp = requests.post(
             f"{API_URL}/api/auth/signup",
             json={"email": email, "password": password, "full_name": full_name},
-            timeout=60,
+            timeout=20,
         )
         if resp.status_code >= 400:
-            return {"ok": False, "error": resp.json().get("detail", "Signup failed")}
-        return {"ok": True, "data": resp.json()}
+            error_msg = None
+            try:
+                data = resp.json()
+                if isinstance(data, dict):
+                    error_msg = data.get("detail")
+            except Exception:
+                pass
+            if not error_msg:
+                if resp.status_code == 500:
+                    error_msg = "Backend server error (HTTP 500). The database (MongoDB Atlas) is unreachable or MONGODB_URI is not set in Render."
+                elif resp.status_code == 503:
+                    error_msg = "Database unavailable (HTTP 503). Could not establish a connection to MongoDB."
+                else:
+                    error_msg = f"Signup failed (HTTP {resp.status_code}): {resp.text.strip()[:150] or 'Unknown error'}"
+            return {"ok": False, "error": error_msg}
+        try:
+            return {"ok": True, "data": resp.json()}
+        except Exception:
+            return {"ok": True, "data": {}}
     except requests.exceptions.RequestException as e:
-        return {"ok": False, "error": str(e)}
+        return {"ok": False, "error": f"Connection error: {str(e)}"}
 
 
 def api_login(email: str, password: str) -> Dict[str, Any]:
@@ -87,19 +104,32 @@ def api_login(email: str, password: str) -> Dict[str, Any]:
         resp = requests.post(
             f"{API_URL}/api/auth/login",
             json={"email": email, "password": password},
-            timeout=60,
+            timeout=20,
         )
         if resp.status_code >= 400:
-            # FastAPI uses `detail` for errors
             detail = None
             try:
-                detail = resp.json().get("detail")
+                data = resp.json()
+                if isinstance(data, dict):
+                    detail = data.get("detail")
             except Exception:
-                detail = None
-            return {"ok": False, "error": detail or "Login failed"}
-        return {"ok": True, "data": resp.json()}
+                pass
+            if not detail:
+                if resp.status_code == 500:
+                    detail = "Backend server error (HTTP 500). The database (MongoDB Atlas) is unreachable or MONGODB_URI is not set in Render."
+                elif resp.status_code == 503:
+                    detail = "Database unavailable (HTTP 503). Unable to connect to MongoDB."
+                elif resp.status_code == 401:
+                    detail = "Incorrect email or password."
+                else:
+                    detail = f"Login failed (HTTP {resp.status_code}): {resp.text.strip()[:150] or 'Unknown error'}"
+            return {"ok": False, "error": detail}
+        try:
+            return {"ok": True, "data": resp.json()}
+        except Exception:
+            return {"ok": False, "error": "Invalid response received from server"}
     except requests.exceptions.RequestException as e:
-        return {"ok": False, "error": str(e)}
+        return {"ok": False, "error": f"Connection error: {str(e)}"}
 
 
 def api_me() -> Dict[str, Any]:
@@ -180,7 +210,17 @@ def render_auth_gate() -> bool:
             else:
                 st.error(result.get("error", "Signup failed"))
 
-    st.info("Tip: Make sure the backend is running at the API URL shown in the sidebar.")
+    # Connection diagnostics
+    try:
+        health_resp = requests.get(f"{API_URL}/healthcheck", timeout=3)
+        if health_resp.status_code == 200:
+            hdata = health_resp.json()
+            if hdata.get("database_connected") is False:
+                st.warning(f"⚠️ **Backend reached, but MongoDB is not connected**: {hdata.get('database_error', 'Check Render MONGODB_URI and MongoDB Atlas network access')}")
+        else:
+            st.warning(f"⚠️ Backend responded with HTTP {health_resp.status_code} at `{API_URL}`")
+    except Exception:
+        st.info("Tip: Make sure the backend is running at the API URL shown in the sidebar.")
     return False
 
 

@@ -82,8 +82,15 @@ def _create_access_token(data: Dict[str, object], expires_delta: Optional[timede
 
 
 async def _get_user_by_email(email: str) -> Optional["UserInDB"]:
-    db = get_db()
-    doc = await db["users"].find_one({"email": email})
+    try:
+        db = get_db()
+        doc = await db["users"].find_one({"email": email})
+    except Exception as e:
+        logger.error(f"Database error in _get_user_by_email: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Database connection error: Unable to reach MongoDB. ({type(e).__name__})",
+        )
     if not doc:
         return None
     # Map Mongo `_id` to `id`
@@ -145,6 +152,9 @@ class HealthResponse(BaseModel):
     """Response model for health check."""
     status: str
     model_loaded: bool
+    database_connected: bool = False
+    database_status: str = "disconnected"
+    database_error: Optional[str] = None
     timestamp: str
 
 
@@ -178,8 +188,16 @@ async def signup(user: UserCreate):
     """
     Create a new user with a hashed password.
     """
-    db = get_db()
-    existing = await db["users"].find_one({"email": user.email})
+    try:
+        db = get_db()
+        existing = await db["users"].find_one({"email": user.email})
+    except Exception as e:
+        logger.error(f"Database error in signup: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Database connection error: Unable to reach MongoDB. ({type(e).__name__})",
+        )
+
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -193,7 +211,14 @@ async def signup(user: UserCreate):
         "hashed_password": _hash_password(user.password),
         "created_at": now,
     }
-    result = await db["users"].insert_one(user_doc)
+    try:
+        result = await db["users"].insert_one(user_doc)
+    except Exception as e:
+        logger.error(f"Database error saving user: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Database error: Unable to write to MongoDB. ({type(e).__name__})",
+        )
 
     return UserPublic(
         id=str(result.inserted_id),
@@ -996,11 +1021,26 @@ async def root():
 async def healthcheck():
     """
     Health check endpoint.
-    Returns API status and model availability.
+    Returns API status, model availability, and database connectivity.
     """
+    db_connected = False
+    db_status = "disconnected"
+    db_error = None
+    try:
+        db = get_db()
+        await db.command("ping")
+        db_connected = True
+        db_status = "connected"
+    except Exception as e:
+        db_error = f"{type(e).__name__}: {str(e)}"
+        logger.warning(f"Healthcheck database ping failed: {db_error}")
+
     return HealthResponse(
-        status="healthy" if model_loaded else "degraded",
+        status="healthy" if (model_loaded and db_connected) else "degraded",
         model_loaded=model_loaded,
+        database_connected=db_connected,
+        database_status=db_status,
+        database_error=db_error,
         timestamp=datetime.now().isoformat()
     )
 
