@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for Mental Health Companion
 
 # Stage 1: Base image with Python
-FROM python:3.10-slim as base
+FROM python:3.11-slim as base
 
 # Set working directory
 WORKDIR /app

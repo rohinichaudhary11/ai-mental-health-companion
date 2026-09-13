@@ -11,7 +11,6 @@ from transformers import (
     DistilBertTokenizer,
     DistilBertForSequenceClassification,
     DistilBertConfig,
-    AdamW,
     get_linear_schedule_with_warmup
 )
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix
@@ -276,7 +275,7 @@ def train_model(
     return model, tokenizer, training_history
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Train DistilBERT for emotion classification")
     parser.add_argument("--data_dir", type=str, required=True, help="Directory with processed data")
     parser.add_argument("--output_dir", type=str, default="models", help="Output directory for model")
@@ -331,4 +330,9 @@ if __name__ == "__main__":
     # Save test results
     with open(Path(args.output_dir) / 'test_results.json', 'w') as f:
         json.dump(test_results, f, indent=2)
+
+
+if __name__ == "__main__":
+    main()
+
 

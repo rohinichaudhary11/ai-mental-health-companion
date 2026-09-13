@@ -249,6 +249,9 @@ def chat_with_therapist(
     try:
         # Try new chat endpoint
         payload: Dict[str, Any] = {"message": message}
+        user = st.session_state.get("current_user")
+        if user and user.get("id"):
+            payload["user_id"] = user["id"]
         if history:
             payload["history"] = [{"role": m["role"], "content": m["content"]} for m in history]
 

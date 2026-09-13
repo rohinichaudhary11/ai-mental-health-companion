@@ -10,7 +10,6 @@ import spacy
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
 import argparse
 import os
 import json
@@ -163,7 +162,7 @@ def preprocess_dataset(input_path, output_dir, use_lemmatization=True, remove_st
     return train_df, val_df, test_df
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Preprocess emotion dataset")
     parser.add_argument("--input", type=str, required=True, help="Input CSV file path")
     parser.add_argument("--output", type=str, required=True, help="Output directory")
@@ -178,4 +177,9 @@ if __name__ == "__main__":
         use_lemmatization=not args.no_lemmatization,
         remove_stopwords=args.remove_stopwords
     )
+
+
+if __name__ == "__main__":
+    main()
+
 
