@@ -1,0 +1,23 @@
+name: Keep Services Awake
+
+on:
+  schedule:
+    # Run every 14 minutes to prevent Render free tier from sleeping (sleeps after 15m)
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          echo "Pinging FastAPI backend on Render..."
+          BACKEND_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://ai-mental-health-companion-main.onrender.com/healthcheck)
+          echo "Backend returned HTTP $BACKEND_STATUS"
+
+      - name: Ping Streamlit Cloud Frontend
+        run: |
+          echo "Pinging Streamlit Cloud frontend..."
+          FRONTEND_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://ai-mental-health-companionn.streamlit.app/)
+          echo "Frontend returned HTTP $FRONTEND_STATUS"
