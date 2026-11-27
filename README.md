@@ -3,10 +3,10 @@
 # 💚 AI-Powered Mental Health Companion
 ### Emotion-aware support, private reflection, and personalized wellbeing guidance.
 
-[![Python 3.11](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/) [![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/) [![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/) [![Transformers](https://img.shields.io/badge/Transformers-FFD21E?style=flat-square&logo=huggingface&logoColor=111111)](https://huggingface.co/docs/transformers/index) [![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 
-An intelligent full-stack application for emotion-aware conversational support, private journaling, mood tracking, and personalized wellbeing suggestions.
+An AI-powered full-stack wellbeing platform that combines emotion-aware conversations, private journaling, mood analytics, crisis-signal guidance, and practical self-care exercises in one supportive space. It is designed to help users reflect on patterns and access gentle, personalized guidance while clearly directing urgent concerns toward professional or emergency support.
 
 🌐 **Live application:** [Frontend UI](https://ai-mental-health-companionn.streamlit.app/) · [Backend API](https://ai-mental-health-companion-main.onrender.com) · [Swagger docs](https://ai-mental-health-companion-main.onrender.com/docs)
 
@@ -73,8 +73,8 @@ Want to run the project on your own machine? Follow these steps:
 
 ### 1. Clone and setup environment
 ```bash
-git clone https://github.com/rohinichaudhary11/ai-mental-health-companion-main.git
-cd ai-mental-health-companion-main
+git clone https://github.com/rohinichaudhary11/ai-mental-health-companion.git
+cd ai-mental-health-companion
 python -m venv venv
 
 # Windows
