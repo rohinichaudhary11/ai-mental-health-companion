@@ -142,3 +142,28 @@ The app will open automatically in your browser at `http://localhost:8501`.
 ├── requirements-api.txt   # Backend specific dependencies
 └── requirements-frontend.txt # Frontend specific dependencies
 ```
+
+---
+
+## 📚 Documentation
+
+- [Deployment guide](DEPLOYMENT.md)
+- [How to run the project](HOW_TO_RUN.md)
+- [Quick start guide](QUICKSTART.md)
+- [Project structure](PROJECT_STRUCTURE.md)
+- [MongoDB schema](docs_mongodb_schema.md)
+- [Render deployment](RENDER_DEPLOYMENT.md)
+
+---
+
+## 🤝 Contributing
+
+Contributions and suggestions are welcome. Fork the repository, create a feature branch, make your changes, and open a pull request with a clear description of what was improved. Please avoid committing secrets, database credentials, or private user data.
+
+Before submitting a change, run the relevant API tests and verify that the application still respects the mental-health disclaimer and privacy expectations.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
