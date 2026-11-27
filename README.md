@@ -1,20 +1,26 @@
-# 💚 AI-Powered Mental Health Companion
+<div align="center">
 
-An intelligent, full-stack application designed to provide emotion-aware conversational support, private journaling, mood tracking, and personalized wellbeing suggestions. Built with **FastAPI**, **Streamlit**, and **MongoDB Atlas**, this application offers a secure and interactive environment for users to reflect on their mental health.
+# 💚 AI-Powered Mental Health Companion
+### Emotion-aware support, private reflection, and personalized wellbeing guidance.
+
+[![Python 3.11](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/) [![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/) [![Transformers](https://img.shields.io/badge/Transformers-FFD21E?style=flat-square&logo=huggingface&logoColor=111111)](https://huggingface.co/docs/transformers/index) [![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+
+An intelligent full-stack application for emotion-aware conversational support, private journaling, mood tracking, and personalized wellbeing suggestions.
+
+🌐 **Live application:** [Frontend UI](https://ai-mental-health-companionn.streamlit.app/) · [Backend API](https://ai-mental-health-companion-main.onrender.com) · [Swagger docs](https://ai-mental-health-companion-main.onrender.com/docs)
+
+**[Key Features](#-key-features) · [Architecture](#️-architecture--workflow) · [Tech Stack](#️-tech-stack) · [Running Locally](#-running-locally) · [Repository Structure](#-repository-structure)**
 
 > **⚠️ Disclaimer:** This AI companion provides informational wellbeing support and CBT-inspired coping ideas. It is **not** a replacement for professional medical advice, diagnosis, therapy, or emergency care.
 
----
+* * *
 
-## 🌍 Live Application Links
+</div>
 
-You can test the application live without installing anything locally:
+## 📌 Overview
 
-- **Frontend UI (Streamlit):** [https://ai-mental-health-companionn.streamlit.app/](https://ai-mental-health-companionn.streamlit.app/)
-- **Backend API (Render):** [https://ai-mental-health-companion-main.onrender.com](https://ai-mental-health-companion-main.onrender.com)
-- **API Documentation (Swagger):** [https://ai-mental-health-companion-main.onrender.com/docs](https://ai-mental-health-companion-main.onrender.com/docs)
-
----
+This project combines a Streamlit frontend, a FastAPI backend, MongoDB Atlas storage, and machine-learning services to create a secure space for reflection and wellbeing support. It is designed to complement professional care, never replace it.
 
 ## ✨ Key Features
 
@@ -51,10 +57,13 @@ Stores document data in 4 main collections within the `mental_health_companion` 
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Python 3.11, FastAPI, Uvicorn, Pydantic, Motor (Async MongoDB), Passlib, python-jose (JWT)
-- **Frontend:** Streamlit, Requests, Plotly, Pandas
-- **Machine Learning / NLP:** HuggingFace Transformers (`transformers`, `torch`), Scikit-learn
-- **Infrastructure:** Docker, Render (Backend Hosting), Streamlit Community Cloud (Frontend Hosting)
+| Domain | Technologies Used |
+| --- | --- |
+| Backend API | Python 3.11, FastAPI, Uvicorn, Pydantic, Motor, Passlib, python-jose |
+| Frontend UI | Streamlit, Requests, Plotly, Pandas |
+| Machine learning and NLP | HuggingFace Transformers, PyTorch, scikit-learn |
+| Database | MongoDB Atlas, PyMongo, Motor |
+| Infrastructure | Docker, Render, Streamlit Community Cloud |
 
 ---
 
